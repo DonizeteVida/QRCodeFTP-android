@@ -17,8 +17,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.setViewTreeLifecycleOwner
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import com.dv.app.qrcodeftp.ui.theme.QRCodeFTPTheme
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.serialization.Serializable
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -27,11 +31,28 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             QRCodeFTPTheme {
-                HomeScreen()
+                Navigation()
             }
         }
     }
 }
+
+@Composable
+fun Navigation(modifier: Modifier = Modifier) {
+    val navController = rememberNavController()
+
+    NavHost(
+        navController,
+        startDestination = Home
+    ) {
+        composable<Home> {
+            HomeScreen()
+        }
+    }
+}
+
+@Serializable
+object Home
 
 @Preview(showSystemUi = true)
 @Composable
