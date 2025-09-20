@@ -32,7 +32,10 @@ fun MainNavigation() {
         composable<Scan> {
             val vm = hiltViewModel<ScanViewModel>()
             val state by vm.state.collectAsStateWithLifecycle()
-            ScanScreen(state)
+            ScanScreen(
+                state,
+                vm::onCameraPreviewReady
+            )
         }
     }
 }
