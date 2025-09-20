@@ -10,7 +10,7 @@ android {
 
     defaultConfig {
         applicationId = "com.dv.app.qrcodeftp"
-        minSdk = 21
+        minSdk = 23
         targetSdk = 36
         versionCode = 1
         versionName = "1.0"
@@ -51,6 +51,7 @@ dependencies {
     implementation(libs.androidx.compose.material3)
 
     implementation(libs.androidx.camera.camera2)
+    implementation(libs.androidx.camera.view)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
