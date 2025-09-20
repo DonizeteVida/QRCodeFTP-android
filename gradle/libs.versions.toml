@@ -12,6 +12,7 @@ ksp = "2.2.20-2.0.3"
 hiltAndroid = "2.57.1"
 kotlinxSerializationJson = "1.9.0"
 navigationCompose = "2.9.4"
+hiltNavigationCompose = "1.3.0"
 cameraCamera2 = "1.5.0"
 
 [libraries]
@@ -35,6 +36,7 @@ hilt-android-compiler = { module = "com.google.dagger:hilt-android-compiler", ve
 
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinxSerializationJson" }
 androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navigationCompose" }
+androidx-hilt-navigation-compose = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "hiltNavigationCompose" }
 
 androidx-camera-camera2 = { module = "androidx.camera:camera-camera2", version.ref = "cameraCamera2" }
 androidx-camera-view = { module = "androidx.camera:camera-view", version.ref = "cameraCamera2" }

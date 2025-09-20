@@ -12,17 +12,24 @@ import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.viewinterop.AndroidView
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.compose.LocalLifecycleOwner
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.setViewTreeLifecycleOwner
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.dv.app.qrcodeftp.ui.theme.QRCodeFTPTheme
 import dagger.hilt.android.AndroidEntryPoint
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.serialization.Serializable
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -38,7 +45,7 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun Navigation(modifier: Modifier = Modifier) {
+fun Navigation() {
     val navController = rememberNavController()
 
     NavHost(
@@ -46,7 +53,9 @@ fun Navigation(modifier: Modifier = Modifier) {
         startDestination = Home
     ) {
         composable<Home> {
-            HomeScreen()
+            val vm = hiltViewModel<HomeViewModel>()
+            val state by vm.state.collectAsStateWithLifecycle()
+            HomeScreen(state)
         }
     }
 }
@@ -56,16 +65,24 @@ object Home
 
 @Preview(showSystemUi = true)
 @Composable
-fun HomeScreen(modifier: Modifier = Modifier) {
-    Scaffold(modifier = Modifier.fillMaxSize(), floatingActionButton = {
-        FloatingActionButton(onClick = {
+fun HomeScreen(state: Int = 0) {
+    Scaffold(
+        Modifier.fillMaxSize(),
+        floatingActionButton = {
+            FloatingActionButton(onClick = {
 
-        }) {
-            Icon(Icons.Filled.Add, contentDescription = "")
+            }) {
+                Icon(Icons.Filled.Add, contentDescription = "")
+            }
         }
-    }) { innerPadding ->
+    ) { innerPadding ->
 
     }
+}
+
+@HiltViewModel
+class HomeViewModel @Inject constructor() : ViewModel() {
+    val state = MutableStateFlow(0)
 }
 
 @Composable
