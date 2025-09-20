@@ -23,7 +23,10 @@ fun MainNavigation() {
         composable<Home> {
             val vm = hiltViewModel<HomeViewModel>()
             val state by vm.state.collectAsStateWithLifecycle()
-            HomeScreen(state)
+            HomeScreen(
+                state,
+                onScanNavigation = { navController.navigate(Scan) }
+            )
         }
 
         composable<Scan> {

@@ -39,6 +39,7 @@ android {
     kotlin {
         compilerOptions {
             jvmTarget = JvmTarget.JVM_11
+            freeCompilerArgs.add("-Xlambdas=class")
         }
     }
     buildFeatures {

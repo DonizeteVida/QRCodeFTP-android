@@ -1,5 +1,6 @@
 package com.dv.app.qrcodeftp.presentation.scan
 
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -10,7 +11,7 @@ import javax.inject.Inject
 fun ScanScreen(
     state: Int = 0
 ) {
-
+    Text("Scan aqui")
 }
 
 @HiltViewModel
