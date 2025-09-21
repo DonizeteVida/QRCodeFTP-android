@@ -3,7 +3,6 @@ package com.dv.app.qrcodeftp.presentation.scan
 import androidx.camera.core.ImageProxy
 import androidx.camera.view.PreviewView
 import androidx.compose.runtime.Composable
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.dv.app.qrcodeftp.framework.AnalysisCameraUseCaseHolder
@@ -14,6 +13,7 @@ import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.channels.consumeEach
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
+import java.util.concurrent.Executors
 import javax.inject.Inject
 
 @Composable
@@ -36,7 +36,11 @@ class ScanViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            imageProxyQueue.consumeEach { processImageProxy(it) }
+            (0 until 64).forEach { _ ->
+                launch {
+                    imageProxyQueue.consumeEach { processImageProxy(it) }
+                }
+            }
         }
     }
 
@@ -52,7 +56,7 @@ class ScanViewModel @Inject constructor(
             )
 
             analysisCameraUseCaseHolder.imageAnalysis.setAnalyzer(
-                ContextCompat.getMainExecutor(previewView.context),
+                Executors.newFixedThreadPool(64),
                 imageProxyQueue::trySend
             )
         }

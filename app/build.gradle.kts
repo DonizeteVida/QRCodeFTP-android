@@ -70,6 +70,8 @@ dependencies {
     implementation(libs.androidx.camera.view)
     implementation(libs.androidx.concurrent.futures.ktx)
 
+    implementation(libs.zxing.cpp)
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

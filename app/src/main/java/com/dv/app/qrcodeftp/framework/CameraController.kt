@@ -1,9 +1,11 @@
 package com.dv.app.qrcodeftp.framework
 
+import android.annotation.SuppressLint
 import android.content.Context
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageAnalysis
 import androidx.camera.core.Preview
+import androidx.camera.core.impl.StreamUseCase
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.camera.view.PreviewView
 import androidx.concurrent.futures.await
@@ -50,9 +52,12 @@ class AnalysisCameraUseCaseHolder(
         .build()
         .also { it.surfaceProvider = previewView.surfaceProvider }
 
+    @SuppressLint("RestrictedApi")
     val imageAnalysis = ImageAnalysis
         .Builder()
-        .setBackpressureStrategy(ImageAnalysis.STRATEGY_KEEP_ONLY_LATEST)
+        .setBackpressureStrategy(ImageAnalysis.STRATEGY_BLOCK_PRODUCER)
+        .setImageQueueDepth(60)
+        .setStreamUseCase(StreamUseCase.STILL_CAPTURE)
         .build()
 
     override val usesCases = arrayOf(
